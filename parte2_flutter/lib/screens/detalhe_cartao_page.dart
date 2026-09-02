@@ -15,6 +15,7 @@ class DetalheCartaoPage extends StatelessWidget {
         padding: const EdgeInsets.all(16.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text('Autor: ${filme.autor}'),
             Text('Duração: ${filme.duracao} min'),
