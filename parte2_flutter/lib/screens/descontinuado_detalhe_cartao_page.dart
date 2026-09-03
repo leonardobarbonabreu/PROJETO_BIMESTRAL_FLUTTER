@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:parte2_flutter/models/longa_metragem.dart';
-
+import 'package:parte2_flutter/widgets/minha_app_bar.dart';
 class DetalheCartaoPage extends StatelessWidget {
   final LongaMetragem filme;
   const DetalheCartaoPage({super.key, required this.filme});
@@ -8,9 +8,7 @@ class DetalheCartaoPage extends StatelessWidget {
   @override
   Widget build(BuildContext context){
     return Scaffold(
-      appBar: AppBar(
-        title: Text(filme.nome)
-      ),
+      appBar: MinhaAppBar(titulo: filme.nome),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(

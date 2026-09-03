@@ -1,4 +1,4 @@
-enum Genero { acao, terror, aventura, comedia, romance, ficcao, drama, suspense, musical }
+import 'package:parte2_flutter/enums/genero.dart';
 
 class LongaMetragem {
   // Atributos da classe
@@ -22,7 +22,7 @@ class LongaMetragem {
   void avaliar(double nota){
        if (nota > 10 || nota < 0.1) {
           avaliacao = nota;
-          print('O seguinte Filme foi avaliado com ${avaliacao} de nota');
+          print('O seguinte Filme foi avaliado com $avaliacao de nota');
        }
        else {
           print('O valor passado é inválido: $nota');

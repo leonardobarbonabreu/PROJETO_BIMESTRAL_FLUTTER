@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:parte2_flutter/models/historico_avaliacao.dart';
 import 'package:parte2_flutter/widgets/cartao.dart';
-import 'package:parte2_flutter/screens/detalhe_cartao_page.dart';
 import 'package:parte2_flutter/screens/cadastro_cartao_page.dart';
+import 'package:parte2_flutter/widgets/minha_app_bar.dart';
 
 class HomePage extends StatefulWidget {
   final HistoricoAvaliacao historico;
@@ -14,33 +14,18 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  String _busca = '';
+
   @override
   Widget build(BuildContext context) {
-      return Scaffold(
-        appBar: AppBar(
-            title: const Text('Home'),
-            actions: [
-              IconButton(
-                icon: Icon(Icons.add),
-                onPressed: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) => CadastroCartaoPage(
-                        onSalvar: (filme) {
-                          setState(
-                            () { 
-                              widget.historico.adicionar(filme);
-                            }
-                          );
-                        }
-                      )
-                    )
-                  );
-                }
-              )
-            ]
-        ),
+        final filmesFiltrados = widget.historico.filmes.where((filme) {
+        final termo = _busca.toLowerCase();
+        return filme.nome.toLowerCase().contains(termo) ||
+               filme.autor.toLowerCase().contains(termo);
+      }).toList();
 
+      return Scaffold(
+        appBar: MinhaAppBar(titulo: 'Listagem de Filmes.'),
         body: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -48,27 +33,73 @@ class _HomePageState extends State<HomePage> {
               Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: Text('Média de avaliações: ${widget.historico.mediaAvaliacao.toStringAsFixed(1)}',
-                  style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                  style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                 ),
               ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                child: TextField(
+                  decoration: const InputDecoration(
+                    hintText: 'Buscar por nome ou autor',
+                    prefixIcon: Icon(Icons.search),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(8.0)),
+                    ),
+                  ),
+                  onChanged: (valor) => setState(() => _busca = valor),
+                ),
+              ),
+              const SizedBox(height: 8),
               //LISTA
               Expanded(
                 child: ListView.builder(
-                  itemCount: widget.historico.filmes.length,
+                  itemCount: filmesFiltrados.length,
                   itemBuilder: (context, index) {
-                    final filme = widget.historico.filmes[index];
+                    final filme = filmesFiltrados[index];
                     return GestureDetector(
-                      child: Cartao(filme: filme),
                       onTap:() {
-                          Navigator.of(context).push(
-                            MaterialPageRoute(builder: (context) => DetalheCartaoPage(filme: filme))
-                          ); 
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => 
+                            CadastroCartaoPage(
+                              filme: filme,
+                              podeEscrever: false,
+                              onSalvar: (filme) {
+                                setState(
+                                  () {
+                                    widget.historico.editar(index, filme);
+                                  }
+                                );
+                              }
+                            )
+                          )
+                        );
                       },
-                    );
+                      child: Cartao(filme: filme)                        
+                    );                    
                   },
                 )
               )
             ]
+        ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (context) => CadastroCartaoPage(
+                  podeEscrever: true,
+                  onSalvar: (filme) {
+                    setState(
+                      () {
+                        widget.historico.adicionar(filme);
+                      }
+                    );
+                  }
+                )
+              )
+            );
+          },
+          child: const Icon(Icons.add),
         ),
       );
   }

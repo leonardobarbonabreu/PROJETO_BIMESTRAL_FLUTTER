@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:parte2_flutter/models/longa_metragem.dart';
+import 'package:parte2_flutter/widgets/genero_chip.dart';
 
 class Cartao extends StatelessWidget {
   final LongaMetragem filme;
-  
+
   const Cartao({super.key, required this.filme});
 
   @override
@@ -29,7 +30,29 @@ class Cartao extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(filme.nome, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
-                Text('${filme.duracao} min • nota ${filme.avaliacao}'),
+                const SizedBox(height: 4),
+                Text('${filme.duracao} min  | ${filme.autor}'),
+                const SizedBox(height: 12),
+                Row(
+                  children: [
+                    Row( children: filme.generos.map((genero) => Padding(
+                    padding: const EdgeInsets.only(right: 8.0),
+                    child: GeneroChip(genero: genero),
+                    )).toList()),
+                    Expanded(
+                      
+                      child: 
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            Chip(label: Text('${filme.avaliacao}/10')),
+                          ],
+                        )
+                      ,
+                    )      
+                  ]
+                )
               ],
             ),
           ),

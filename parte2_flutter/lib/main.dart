@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:parte2_flutter/models/historico_avaliacao.dart';
 import 'package:parte2_flutter/screens/home_page.dart';
 import 'package:parte2_flutter/models/longa_metragem.dart';
+import 'package:parte2_flutter/enums/genero.dart';
 void main() {
   runApp(const MainApp());
 }
@@ -12,6 +13,7 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: HomePage(
         historico: HistoricoAvaliacao(historico: [
           LongaMetragem(nome: 'Cidade de Deus', duracao: 130, autor: 'Fernando Meirelles', avaliacao: 9.5, generos: [Genero.drama]),

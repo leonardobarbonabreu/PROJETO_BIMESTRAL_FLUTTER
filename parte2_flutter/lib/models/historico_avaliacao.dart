@@ -23,6 +23,13 @@ class HistoricoAvaliacao {
     _historico.add(filme);
   }
 
+  //Edita um filme existente no histórico
+  void editar(int index, LongaMetragem novoFilme) {
+    if (index >= 0 && index < _historico.length) {
+      _historico[index] = novoFilme;
+    }
+  }
+
   // Retorno de uma lista imutável
   List<LongaMetragem> get filmes => List.unmodifiable(_historico);
 
