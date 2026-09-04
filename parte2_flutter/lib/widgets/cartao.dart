@@ -14,6 +14,7 @@ class Cartao extends StatelessWidget {
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
         color: Colors.white,
+        border: Border.all(width: 1, color: Colors.black38),
         borderRadius: BorderRadius.circular(12),
         boxShadow: [
           BoxShadow(
@@ -33,10 +34,10 @@ class Cartao extends StatelessWidget {
                 const SizedBox(height: 4),
                 Text('${filme.duracao} min  | ${filme.autor}'),
                 const SizedBox(height: 12),
-                Row(
+                Row(                  
                   children: [
                     Row( children: filme.generos.map((genero) => Padding(
-                    padding: const EdgeInsets.only(right: 8.0),
+                    padding: const EdgeInsets.only(right: 8.0),//, top: 4.0),
                     child: GeneroChip(genero: genero),
                     )).toList()),
                     Expanded(
@@ -46,7 +47,14 @@ class Cartao extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.end,
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
-                            Chip(label: Text('${filme.avaliacao}/10')),
+                            Chip(
+                              backgroundColor: Colors.white,
+                              materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                              visualDensity: VisualDensity(horizontal: 0.0, vertical: -4.0),
+                              padding: EdgeInsets.symmetric(vertical: 1.0, horizontal: 2.0),
+
+                              shape: RoundedRectangleBorder(borderRadius: BorderRadiusGeometry.circular(4)),                              
+                              label: Text('${filme.avaliacao}/10')),
                           ],
                         )
                       ,

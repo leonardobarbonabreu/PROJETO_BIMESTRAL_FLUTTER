@@ -102,39 +102,64 @@ class _CadastroCartaoPageState extends State<CadastroCartaoPage> {
               ),
             ),
             const SizedBox(height: 24),
-            ElevatedButton(
-              onPressed: _podeEscrever
-                ? () {
-                    final novoFilme = LongaMetragem(
-                      nome: _nomeController.text,
-                      autor: _autorController.text,
-                      duracao: 120,
-                      avaliacao: double.tryParse(_notaController.text) ?? 1.0,
-                      generos: [Genero.acao]
-                    );
-                    widget.onSalvar(novoFilme);
-                    Navigator.of(context).pop();
-                  }
-                : null,
-              style: ElevatedButton.styleFrom(
-                backgroundColor: widget.filme != null ? Colors.blue : Colors.green
+            Visibility(
+              visible: _podeEscrever,
+              child: SizedBox(
+                height: 48,
+                width: 128,
+                child: ElevatedButton(                
+                  onPressed: _podeEscrever
+                    ? () {
+                        final novoFilme = LongaMetragem(
+                          nome: _nomeController.text,
+                          autor: _autorController.text,
+                          duracao: 120,
+                          avaliacao: double.tryParse(_notaController.text) ?? 1.0,
+                          generos: [Genero.acao]
+                        );
+                        widget.onSalvar(novoFilme);
+                        Navigator.of(context).pop();
+                      }
+                    : null,
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: widget.filme != null ? Colors.blue : Colors.white,
+                    side: BorderSide(color: Colors.black38),
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadiusGeometry.circular(8.0)),                                                      
+                  ),              
+                  child: Text(
+                    _editando ? 'Alterar' : 'Cadastrar',
+                    style: TextStyle(color: _editando ? Colors.white : Colors.black,), 
+                  )                
+                ),
               ),
-
-              child: Text(_editando ? 'Alterar' : 'Cadastrar')
-              
             )
           ],
         )
       ),
       floatingActionButton:
-        FloatingActionButton(
-            onPressed: () {
-              setState(() {
-                _podeEscrever = !_podeEscrever; 
-              });
-            },
-            child: !_podeEscrever? Icon(Icons.edit) : const Icon(Icons.visibility_outlined)
-          ) 
+        Visibility(
+          visible: _editando,
+          child: Padding(
+            padding: const EdgeInsets.only(bottom: 32.0, right: 12.0),
+            child: SizedBox(
+              width: 70,
+              height: 70,
+              child: FloatingActionButton(
+                  backgroundColor: Colors.white,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadiusGeometry.circular(16.0),
+                    side: BorderSide(color: Colors.black38)
+                  ),
+                  onPressed: () {
+                    setState(() {
+                      _podeEscrever = !_podeEscrever; 
+                    });
+                  },
+                  child: !_podeEscrever? Icon(Icons.edit) : const Icon(Icons.visibility_outlined)
+                ),
+            ),
+          ),
+        ) 
     );
   }
 }

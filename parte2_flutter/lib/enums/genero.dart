@@ -73,7 +73,7 @@ extension GeneroCor on Genero {
     Genero.musical => const GeneroEstilo(
         corFundo: Colors.yellow,
         corTexto: Colors.black87,
-        corBorda: Colors.orangeAccent,
+        corBorda: Colors.black,
         descricao: 'Musical',
       ),
   };

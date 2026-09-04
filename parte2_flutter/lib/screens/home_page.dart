@@ -34,7 +34,7 @@ class _HomePageState extends State<HomePage> {
                 padding: const EdgeInsets.all(16.0),
                 child: Text('Média de avaliações: ${widget.historico.mediaAvaliacao.toStringAsFixed(1)}',
                   style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                ),
+              ),
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16.0),
@@ -52,54 +52,105 @@ class _HomePageState extends State<HomePage> {
               const SizedBox(height: 8),
               //LISTA
               Expanded(
-                child: ListView.builder(
+                child: ListView.builder(                  
                   itemCount: filmesFiltrados.length,
                   itemBuilder: (context, index) {
                     final filme = filmesFiltrados[index];
-                    return GestureDetector(
-                      onTap:() {
-                        Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (context) => 
-                            CadastroCartaoPage(
-                              filme: filme,
-                              podeEscrever: false,
-                              onSalvar: (filme) {
-                                setState(
-                                  () {
-                                    widget.historico.editar(index, filme);
-                                  }
-                                );
-                              }
+                    return Dismissible(
+                      key: ObjectKey(filme),
+                      direction: DismissDirection.endToStart,
+                      background: Container(
+                      color: Colors.red,
+                      alignment: Alignment.centerRight,
+                      padding: const EdgeInsets.only(right: 20),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          Text('Arraste para Excluir', style: TextStyle(color: Colors.white),),
+                          Padding(padding: const EdgeInsets.symmetric(horizontal: 8.0),),
+                          const Icon(Icons.delete, color: Colors.white),
+                        ],
+                      ),
+                      ),
+                      child: GestureDetector(
+                        onTap:() {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => 
+                              CadastroCartaoPage(
+                                filme: filme,
+                                podeEscrever: false,
+                                onSalvar: (filme) {
+                                  setState(
+                                    () {
+                                      ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                                      widget.historico.editar(index, filme);
+                                    }
+                                  );
+                                }
+                              )
                             )
-                          )
+                          );
+                          ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                        },
+                        child: Cartao(filme: filme)                        
+                      ),
+                      onDismissed: (_) {    
+                        setState(() {
+                          widget.historico.remover(filme);                        
+                        });
+                        
+                        ScaffoldMessenger.of(context).clearSnackBars();
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            duration: const Duration(seconds: 4),
+                            backgroundColor: Colors.black,                            
+                            content: Text('Filme Removido', style: TextStyle(color: Colors.white, fontWeight: FontWeight(400)),),
+                            action: SnackBarAction(label: 'Desfazer', onPressed: (){
+                              setState(() {
+                                widget.historico.adicionar(filme, index);
+                              });
+                            }),  
+                          ),
                         );
                       },
-                      child: Cartao(filme: filme)                        
                     );                    
                   },
                 )
               )
             ]
         ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (context) => CadastroCartaoPage(
-                  podeEscrever: true,
-                  onSalvar: (filme) {
-                    setState(
-                      () {
-                        widget.historico.adicionar(filme);
+        floatingActionButton: Padding(
+          padding: const EdgeInsets.only(bottom: 32.0, right: 12.0),
+          child: SizedBox(
+            width: 70,
+            height: 70,
+            child: FloatingActionButton(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadiusGeometry.circular(16.0),
+                side: BorderSide(color: Colors.black38)
+              ),
+              backgroundColor: Colors.white,
+              onPressed: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => CadastroCartaoPage(
+                      podeEscrever: true,
+                      onSalvar: (filme) {
+                        setState(
+                          () {                            
+                            widget.historico.adicionar(filme);
+                          }
+                        );
                       }
-                    );
-                  }
-                )
-              )
-            );
-          },
-          child: const Icon(Icons.add),
+                    )
+                  )
+                );
+                ScaffoldMessenger.of(context).hideCurrentSnackBar();
+              },
+              child: const Icon(Icons.add),
+            ),
+          ),
         ),
       );
   }
