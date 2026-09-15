@@ -1,11 +1,21 @@
 import 'package:parte2_flutter/enums/genero.dart';
 
+/// Exercício 1 — Entidade principal do domínio.
+///
+/// Um filme que já assisti. O construtor usa parâmetros nomeados com [required]
+/// nos campos obrigatórios; [dataAvaliacao] é opcional e recebe o valor padrão
+/// "agora" quando não é informado.
+///
+/// Cinco tipos diferentes: `String`, `int`, `double`, `DateTime` e `List<Genero>`.
 class LongaMetragem {
-  // Atributos da classe
-  String   nome;
-  int      duracao;
-  String   autor;
-  double   avaliacao;
+  /// Duração atribuída a um filme cadastrado pela tela da Parte 2, onde o
+  /// formulário tem no máximo três campos e a duração não é digitada.
+  static const int duracaoPadrao = 120;
+
+  String nome;
+  int duracao;
+  String autor;
+  double avaliacao;
   DateTime dataAvaliacao;
   final List<Genero> generos;
 
@@ -18,19 +28,25 @@ class LongaMetragem {
     DateTime? dataAvaliacao,
   }) : dataAvaliacao = dataAvaliacao ?? DateTime.now();
 
-  //Função para avaliar
-  void avaliar(double nota){
-       if (nota > 10 || nota < 0.1) {
-          avaliacao = nota;
-          print('O seguinte Filme foi avaliado com $avaliacao de nota');
-       }
-       else {
-          print('O valor passado é inválido: $nota');
-       }       
+  /// Data de avaliação em dd/MM/yyyy, sem depender do pacote `intl`.
+  String get dataFormatada =>
+      '${dataAvaliacao.day.toString().padLeft(2, '0')}/'
+      '${dataAvaliacao.month.toString().padLeft(2, '0')}/'
+      '${dataAvaliacao.year}';
+
+  String get generosFormatados =>
+      generos.map((genero) => genero.descricao).join(', ');
+
+  /// Reavalia o filme. Devolve `false` quando a nota está fora de 0 a 10,
+  /// em vez de imprimir: o modelo não decide como o erro é mostrado.
+  bool avaliar(double nota) {
+    if (nota < 0 || nota > 10) return false;
+    avaliacao = nota;
+    return true;
   }
 
-  String ficha() {
-    return 'LongaMetragem{nome: $nome, duracao: $duracao, autor: $autor, avaliacao: $avaliacao, dataAvaliacao: $dataAvaliacao, generos: $generos}';
-  }
-
+  /// Exercício 2 — este é o método sobrescrito por [Animacao].
+  String ficha() =>
+      'Filme: $nome | $duracao min | nota $avaliacao | dir. $autor '
+      '| $generosFormatados | avaliado em $dataFormatada';
 }

@@ -21,6 +21,10 @@ class GeneroEstilo {
 }
 
 extension GeneroCor on Genero {
+  /// Rotulo legivel do genero. Mesmo nome usado pela Parte 1, para que
+  /// LongaMetragem.generosFormatados funcione igual nos dois projetos.
+  String get descricao => estilo.descricao;
+
   GeneroEstilo get estilo => switch (this) {
     Genero.acao => const GeneroEstilo(
         corFundo: Colors.deepOrange,
@@ -31,7 +35,7 @@ extension GeneroCor on Genero {
     Genero.terror => const GeneroEstilo(
         corFundo: Colors.black87,
         corTexto: Colors.white,
-        corBorda: Colors.red,
+        corBorda: Colors.black87,
         descricao: 'Terror',
       ),
     Genero.aventura => const GeneroEstilo(
@@ -42,7 +46,7 @@ extension GeneroCor on Genero {
       ),
     Genero.comedia => const GeneroEstilo(
         corFundo: Colors.amber,
-        corTexto: Colors.black87,
+        corTexto: Colors.white,
         corBorda: Colors.orangeAccent,
         descricao: 'Comédia',
       ),
@@ -54,7 +58,7 @@ extension GeneroCor on Genero {
       ),
     Genero.ficcao => const GeneroEstilo(
         corFundo: Colors.cyan,
-        corTexto: Colors.black87,
+        corTexto: Colors.white,
         corBorda: Colors.cyan,
         descricao: 'Ficção Científica',
       ),
@@ -73,7 +77,7 @@ extension GeneroCor on Genero {
     Genero.musical => const GeneroEstilo(
         corFundo: Colors.yellow,
         corTexto: Colors.black87,
-        corBorda: Colors.black,
+        corBorda: Colors.yellow,
         descricao: 'Musical',
       ),
   };

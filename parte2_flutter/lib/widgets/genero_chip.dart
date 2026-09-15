@@ -30,6 +30,11 @@ class GeneroChip extends StatelessWidget {
         onSelected: onSelecionar,
         backgroundColor: Colors.transparent,
         selectedColor: estilo.corFundo,
+        materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+        visualDensity: VisualDensity(horizontal: 0.0, vertical: -4.0),
+        padding: EdgeInsets.symmetric(vertical: 1.0, horizontal: 2.0),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadiusGeometry.circular(12)),
+
         side: BorderSide(color: estilo.corBorda, width: 1),
         showCheckmark: false,
       );
