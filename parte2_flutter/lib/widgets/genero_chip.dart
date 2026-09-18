@@ -18,9 +18,7 @@ class GeneroChip extends StatelessWidget {
     final estilo = genero.estilo;
     final rotulo = Text(
       estilo.descricao,
-      style: TextStyle(
-        color: selecionado ? estilo.corTexto : estilo.corFundo,
-      ),
+      style: TextStyle(color: selecionado ? estilo.corTexto : estilo.corFundo),
     );
 
     if (onSelecionar != null) {
@@ -33,7 +31,9 @@ class GeneroChip extends StatelessWidget {
         materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
         visualDensity: VisualDensity(horizontal: 0.0, vertical: -4.0),
         padding: EdgeInsets.symmetric(vertical: 1.0, horizontal: 2.0),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadiusGeometry.circular(12)),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadiusGeometry.circular(12),
+        ),
 
         side: BorderSide(color: estilo.corBorda, width: 1),
         showCheckmark: false,
@@ -46,7 +46,9 @@ class GeneroChip extends StatelessWidget {
       materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
       visualDensity: VisualDensity(horizontal: 0.0, vertical: -4.0),
       padding: EdgeInsets.symmetric(vertical: 1.0, horizontal: 2.0),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadiusGeometry.circular(12)),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadiusGeometry.circular(12),
+      ),
       side: BorderSide(color: estilo.corBorda, width: 1),
     );
   }

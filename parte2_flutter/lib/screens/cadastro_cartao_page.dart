@@ -46,7 +46,6 @@ class _CadastroCartaoPageState extends State<CadastroCartaoPage> {
   final Set<Genero> _generosSelecionados = {};
 
   bool get _editando => widget.filme != null;
-
   late bool _podeEscrever;
 
   @override
@@ -57,7 +56,7 @@ class _CadastroCartaoPageState extends State<CadastroCartaoPage> {
 
     final filme = widget.filme;
     if (filme != null) {
-      _nomeController.text = filme.nome;
+      _nomeController.text  = filme.nome;
       _autorController.text = filme.autor;
       _notaController.text = filme.avaliacao.toString();
       _generosSelecionados.addAll(filme.generos);
@@ -120,13 +119,11 @@ class _CadastroCartaoPageState extends State<CadastroCartaoPage> {
   LongaMetragem _montarFilme() {
     final original = widget.filme;
 
-    final nome = _nomeController.text.trim();
-    final autor = _autorController.text.trim();
-    final nota =
-        double.tryParse(_notaController.text.trim().replaceAll(',', '.')) ?? 0;
-    final generos = _generosSelecionados.toList();
-
-    final duracao = original?.duracao ?? LongaMetragem.duracaoPadrao;
+    final nome          = _nomeController.text.trim();
+    final autor         = _autorController.text.trim();
+    final nota          = double.tryParse(_notaController.text.trim().replaceAll(',', '.')) ?? 0;
+    final generos       = _generosSelecionados.toList();
+    final duracao       = original?.duracao ?? LongaMetragem.duracaoPadrao;
     final dataAvaliacao = original?.dataAvaliacao ?? DateTime.now();
 
     // Editar uma animação precisa devolver uma animação, ou a técnica e o

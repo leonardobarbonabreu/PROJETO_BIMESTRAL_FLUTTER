@@ -77,13 +77,14 @@ class _HomePageState extends State<HomePage> {
         SnackBar(
           duration: const Duration(seconds: 4),
           backgroundColor: Colors.black,
-          content: const Text('Filme removido',
-              style: TextStyle(color: Colors.white)),
+          content: const Text(
+            'Filme removido',
+            style: TextStyle(color: Colors.white),
+          ),
           action: SnackBarAction(
             label: 'Desfazer',
-            onPressed: () => setState(
-              () => widget.historico.adicionar(filme, indexReal),
-            ),
+            onPressed: () =>
+                setState(() => widget.historico.adicionar(filme, indexReal)),
           ),
         ),
       );
@@ -112,10 +113,7 @@ class _HomePageState extends State<HomePage> {
               'Média de avaliações: '
               '${widget.historico.mediaAvaliacao.toStringAsFixed(1)}'
               '  (${widget.historico.quantidade} filmes)',
-              style: const TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-              ),
+              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
           ),
           Padding(
@@ -155,8 +153,10 @@ class _HomePageState extends State<HomePage> {
                     child: const Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        Text('Arraste para excluir',
-                            style: TextStyle(color: Colors.white)),
+                        Text(
+                          'Arraste para excluir',
+                          style: TextStyle(color: Colors.white),
+                        ),
                         SizedBox(width: 8),
                         Icon(Icons.delete, color: Colors.white),
                       ],

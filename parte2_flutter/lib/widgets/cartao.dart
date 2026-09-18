@@ -47,8 +47,10 @@ class Cartao extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 4),
-                Text(filme.autor,
-                    style: const TextStyle(color: Colors.black54)),
+                Text(
+                  filme.autor,
+                  style: const TextStyle(color: Colors.black54),
+                ),
                 const SizedBox(height: 12),
                 Wrap(
                   spacing: 8,

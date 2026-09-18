@@ -57,6 +57,7 @@ class HistoricoAvaliacao {
     if (filme.generos.isEmpty) {
       return 'Selecione ao menos um gênero para o filme.';
     }
+    
     return null;
   }
 
